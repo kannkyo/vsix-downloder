@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+const program = require('commander');
+const http = require('https');
+const fs = require('fs');
+const path = require('path');
+const debug = require('debug')('vsix')
+
+program
+    .version('0.0.1')
+
+program
+    .command('download <identifer>')
+    .description('Download extension.')
+        let publisher = identifer.split('.')[0];
+        let extension = identifer.split('.')[1].split(':')[0];
+        let version = identifer.split(':')[1];
+
+        let url =
+            `https://${publisher}.gallery.vsassets.io/_apis/public/gallery/` +
+            `publisher/${publisher}/` +
+            `extension/${extension}/` +
+            `${version}/` +
+            'assetbyname/Microsoft.VisualStudio.Services.VSIXPackage';
+        let filename = `${publisher}.${extension}-${version}.vsix`;
+
+        console.info(`download ${filename} from ${url}`);
+        let file = fs.createWriteStream(filename);
+        let request = http.get(url,
+            (response) => {
+                response.pipe(file);
+            });
+    });
+
+program.parse(process.argv);
