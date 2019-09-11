@@ -16,6 +16,10 @@ program
 program
     .command('download <identifer>')
     .description('Download extension.')
+    // .option('-p, --publisher [publisher]', 'Extension publisher name')
+    // .option('-e, --extension [extension]', 'Extension name')
+    // .option('-v, --version <version>', 'Extension version')
+    .action((identifer, options) => {
         let publisher = identifer.split('.')[0];
         let extension = identifer.split('.')[1].split(':')[0];
         let version = identifer.split(':')[1];
